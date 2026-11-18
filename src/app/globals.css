@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/*
+  Kairo · tokens
+  Tipografía: Atkinson Hyperlegible (Braille Institute), elegida por legibilidad para pacientes mayores o con baja visión.
+  Color de marca índigo, separado a propósito de los tres colores del semáforo clínico para que nunca compitan.
+*/
+:root {
+  --ink: #1d2433;
+  --muted: #586274;
+  --paper: #f3f5f7;
+  --surface: #ffffff;
+  --line: #dce1e6;
+  --brand: #3b2f8f;
+  --brand-tint: #ebe9f7;
+
+  --verde: #2b8a57;
+  --verde-tint: #e2f2e9;
+  --ambar: #c98a00;
+  --ambar-ink: #7d5500;
+  --ambar-tint: #fbefd2;
+  --rojo: #c2353e;
+  --rojo-tint: #f9e0e2;
+  --silencio: #8a93a3;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-tint: var(--brand-tint);
+  --color-verde: var(--verde);
+  --color-verde-tint: var(--verde-tint);
+  --color-ambar: var(--ambar);
+  --color-ambar-ink: var(--ambar-ink);
+  --color-ambar-tint: var(--ambar-tint);
+  --color-rojo: var(--rojo);
+  --color-rojo-tint: var(--rojo-tint);
+  --color-silencio: var(--silencio);
+  --font-sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum";
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* El único movimiento de la portada: un día del calendario cambia de verde a ámbar. */
+@keyframes kairo-turn {
+  0%, 55% { background: var(--verde); transform: scaleY(1); }
+  65% { transform: scaleY(1.35); }
+  75%, 100% { background: var(--ambar); transform: scaleY(1); }
+}
+.kairo-turn {
+  animation: kairo-turn 2.4s ease-out 0.6s both;
+  transform-origin: bottom;
+}
+
+/* Al llegar un registro nuevo, la fila del panel se ilumina una vez. */
+@keyframes kairo-arrive {
+  from { box-shadow: 0 0 0 3px var(--brand); }
+  to { box-shadow: 0 0 0 3px transparent; }
+}
+.kairo-arrive {
+  animation: kairo-arrive 1.8s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kairo-turn { animation: none; background: var(--ambar); }
+  .kairo-arrive { animation: none; }
+}
