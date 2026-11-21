@@ -134,6 +134,30 @@ export default function Home() {
           />
         </section>
 
+        {/* Entrar en la demo */}
+        <section id="demo" className="scroll-mt-6 pb-20">
+          <div className="mx-auto w-full max-w-6xl px-6">
+            <h2 className="font-display text-3xl font-bold text-brand">Entra en la demo</h2>
+            <p className="mt-2 max-w-[62ch] text-muted">
+              Una persona abre la app del paciente en su móvil y otra el panel de enfermería en el ordenador. Lo que cuenta el
+              paciente aparece en el panel al momento, y la respuesta de enfermería llega al móvil.
+            </p>
+            <nav aria-label="Entrar en la demo" className="mt-8 grid gap-4 md:grid-cols-3">
+              <Link href="/paciente" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
+                <span className="block font-display text-xl font-bold group-hover:text-brand">App del paciente</span>
+                <span className="mt-1 block text-muted">Contar cómo me encuentro y hablar con mi equipo.</span>
+              </Link>
+              <Link href="/panel" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
+                <span className="block font-display text-xl font-bold group-hover:text-brand">Panel de enfermería</span>
+                <span className="mt-1 block text-muted">Ver quién necesita atención hoy y responder.</span>
+              </Link>
+              <Link href="/demo" className="group rounded-2xl bg-brand p-6 text-white hover:bg-ink">
+                <span className="block font-display text-xl font-bold">Las dos a la vez</span>
+                <span className="mt-1 block text-white/80">La vista de la demo: el paciente habla y el panel cambia.</span>
+              </Link>
+            </nav>
+          </div>
+        </section>
         {/* Cómo funciona */}
         <section id="como-funciona" className="scroll-mt-6 bg-surface py-20">
           <div className="mx-auto w-full max-w-6xl px-6">
@@ -182,27 +206,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Entrar en la demo */}
-        <section className="pb-4">
-          <div className="mx-auto w-full max-w-6xl px-6">
-            <h2 className="font-display text-3xl font-bold text-brand">Pruébalo</h2>
-            <p className="mt-2 text-muted">Abre la app del paciente en el móvil y el panel en el ordenador: se sincronizan al momento.</p>
-            <nav aria-label="Entrar en la demo" className="mt-8 grid gap-4 md:grid-cols-3">
-              <Link href="/paciente" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
-                <span className="block font-display text-xl font-bold group-hover:text-brand">App del paciente</span>
-                <span className="mt-1 block text-muted">Contar cómo me encuentro y hablar con mi equipo.</span>
-              </Link>
-              <Link href="/panel" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
-                <span className="block font-display text-xl font-bold group-hover:text-brand">Panel de enfermería</span>
-                <span className="mt-1 block text-muted">Ver quién necesita atención hoy y responder.</span>
-              </Link>
-              <Link href="/demo" className="group rounded-2xl bg-brand p-6 text-white hover:bg-ink">
-                <span className="block font-display text-xl font-bold">Las dos a la vez</span>
-                <span className="mt-1 block text-white/80">La vista de la demo: el paciente habla y el panel cambia.</span>
-              </Link>
-            </nav>
-          </div>
-        </section>
       </main>
 
       <SiteFooter />
