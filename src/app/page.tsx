@@ -1,4 +1,4 @@
-import { ArrowRight, BellRing, BookOpenCheck, ClipboardList, Mic, Scale, Stethoscope } from "lucide-react";
+import { ArrowRight, BellRing, BookOpenCheck, ClipboardList, Mic, Monitor, Scale, Smartphone, Stethoscope } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/site";
@@ -68,7 +68,7 @@ export default function Home() {
       <main className="flex flex-1 flex-col">
         {/* Héroe */}
         <section className="relative overflow-hidden">
-          <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 pt-6 pb-16 md:grid-cols-[1.15fr_1fr] md:items-center md:pt-10 md:pb-24">
+          <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 pt-6 pb-16 md:grid-cols-[1.15fr_1fr] md:items-center md:pt-10 md:pb-20">
             <div className="relative z-10">
               <h1 className="font-display text-5xl leading-[1.04] font-bold tracking-tight text-brand md:text-[3.25rem] xl:text-[3.6rem]">
                 Actuar a tiempo, <br className="hidden lg:block" />
@@ -134,32 +134,78 @@ export default function Home() {
           />
         </section>
 
-        {/* Entrar en la demo */}
-        <section id="demo" className="scroll-mt-6 pb-20">
+        {/* Entrar en la demo: banda de la marca, una tarjeta por papel */}
+        <section id="demo" className="scroll-mt-6 bg-brand py-16 text-white md:py-20">
           <div className="mx-auto w-full max-w-6xl px-6">
-            <h2 className="font-display text-3xl font-bold text-brand">Entra en la demo</h2>
-            <p className="mt-2 max-w-[62ch] text-muted">
-              Una persona abre la app del paciente en su móvil y otra el panel de enfermería en el ordenador. Lo que cuenta el
-              paciente aparece en el panel al momento, y la respuesta de enfermería llega al móvil.
-            </p>
-            <nav aria-label="Entrar en la demo" className="mt-8 grid gap-4 md:grid-cols-3">
-              <Link href="/paciente" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
-                <span className="block font-display text-xl font-bold group-hover:text-brand">App del paciente</span>
-                <span className="mt-1 block text-muted">Contar cómo me encuentro y hablar con mi equipo.</span>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="font-bold text-sand">Pruébalo</p>
+                <h2 className="mt-2 font-display text-4xl leading-tight font-bold">Entra en la demo</h2>
+                <p className="mt-3 max-w-[56ch] text-lg leading-relaxed text-white/80">
+                  Hacen falta dos personas: una en el móvil, como paciente, y otra en el ordenador, como enfermería. Lo que
+                  cuenta el paciente aparece en el panel al momento.
+                </p>
+              </div>
+              <Link href="/demo" className="flex items-center gap-2 font-bold text-white underline-offset-4 hover:underline">
+                ¿Una sola pantalla? Ver las dos a la vez <ArrowRight className="size-5" aria-hidden />
               </Link>
-              <Link href="/panel" className="group rounded-2xl border border-line bg-surface p-6 hover:border-brand">
-                <span className="block font-display text-xl font-bold group-hover:text-brand">Panel de enfermería</span>
-                <span className="mt-1 block text-muted">Ver quién necesita atención hoy y responder.</span>
+            </div>
+
+            <nav aria-label="Entrar en la demo" className="relative mt-10 grid gap-5 md:grid-cols-2 md:gap-8">
+              <Link
+                href="/paciente"
+                className="group flex flex-col rounded-3xl bg-surface p-7 text-ink shadow-[0_20px_50px_-24px_rgb(0_0_0/0.5)] transition hover:-translate-y-1 md:p-8"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand text-white">
+                    <Mic className="size-7" aria-hidden />
+                  </span>
+                  <div>
+                    <span className="flex items-center gap-1.5 text-sm font-bold text-muted">
+                      <Smartphone className="size-4" aria-hidden /> En el móvil
+                    </span>
+                    <span className="mt-0.5 block font-display text-2xl font-bold text-brand">Soy el paciente</span>
+                  </div>
+                </div>
+                <p className="mt-5 text-lg leading-relaxed text-muted md:mb-8">
+                  Cuenta con tu voz cómo te encuentras, pregunta tus dudas sobre el medicamento y lee lo que te responde tu
+                  equipo.
+                </p>
+                <span className="mt-6 flex items-center justify-between gap-3 rounded-xl bg-brand px-5 py-3.5 font-display text-lg font-bold text-white group-hover:bg-ink md:mt-auto md:pt-3.5">
+                  Abrir la app del paciente <ArrowRight className="size-5" aria-hidden />
+                </span>
               </Link>
-              <Link href="/demo" className="group rounded-2xl bg-brand p-6 text-white hover:bg-ink">
-                <span className="block font-display text-xl font-bold">Las dos a la vez</span>
-                <span className="mt-1 block text-white/80">La vista de la demo: el paciente habla y el panel cambia.</span>
+
+              <Link
+                href="/panel"
+                className="group flex flex-col rounded-3xl bg-surface p-7 text-ink shadow-[0_20px_50px_-24px_rgb(0_0_0/0.5)] transition hover:-translate-y-1 md:p-8"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="flex size-16 shrink-0 flex-col justify-center gap-1.5 rounded-2xl bg-paper px-3.5" aria-hidden>
+                    <span className="h-2 rounded-full bg-rojo" />
+                    <span className="h-2 w-4/5 rounded-full bg-ambar" />
+                    <span className="h-2 w-3/5 rounded-full bg-verde" />
+                  </span>
+                  <div>
+                    <span className="flex items-center gap-1.5 text-sm font-bold text-muted">
+                      <Monitor className="size-4" aria-hidden /> En el ordenador
+                    </span>
+                    <span className="mt-0.5 block font-display text-2xl font-bold text-brand">Soy enfermería</span>
+                  </div>
+                </div>
+                <p className="mt-5 text-lg leading-relaxed text-muted md:mb-8">
+                  Mira quién necesita atención hoy y por qué, revisa lo que ha contado el paciente y respóndele desde el panel.
+                </p>
+                <span className="mt-6 flex items-center justify-between gap-3 rounded-xl bg-brand px-5 py-3.5 font-display text-lg font-bold text-white group-hover:bg-ink md:mt-auto md:pt-3.5">
+                  Abrir el panel de enfermería <ArrowRight className="size-5" aria-hidden />
+                </span>
               </Link>
             </nav>
           </div>
         </section>
+
         {/* Cómo funciona */}
-        <section id="como-funciona" className="scroll-mt-6 bg-surface py-20">
+        <section id="como-funciona" className="scroll-mt-6 py-20">
           <div className="mx-auto w-full max-w-6xl px-6">
             <p className="font-bold text-muted">Cómo funciona</p>
             <h2 className="mt-2 max-w-[24ch] font-display text-4xl leading-tight font-bold text-brand">
