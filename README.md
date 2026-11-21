@@ -38,7 +38,7 @@ La voz usa el reconocimiento del navegador: funciona en Chrome, Edge y Safari, e
 ### Con Supabase (sincronizar entre dispositivos)
 
 1. Crea un proyecto en [Supabase](https://supabase.com).
-2. En *SQL Editor*, ejecuta `supabase/migrations/0001_init.sql` y después `0002_engine.sql`.
+2. En *SQL Editor*, ejecuta en orden `supabase/migrations/0001_init.sql`, `0002_engine.sql` y `0003_grants.sql`.
 3. Copia `.env.example` como `.env.local` y rellena las claves.
 4. Carga los pacientes ficticios: `npm run db:seed`.
 
