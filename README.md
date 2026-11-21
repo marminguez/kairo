@@ -29,10 +29,16 @@ npm run dev
 
 Sin configurar nada, Kairo funciona en **modo demo local**: los datos viven en el navegador y las pestañas se sincronizan entre sí. Es también la red de seguridad para la demo en directo.
 
+### Con IA
+
+Añade `ANTHROPIC_API_KEY` en `.env.local`. Sin clave, o si la IA falla, Kairo usa un extractor local de palabras clave para que la demo nunca se quede sin respuesta. El modelo se puede cambiar con `ANTHROPIC_MODEL`.
+
+La voz usa el reconocimiento del navegador: funciona en Chrome, Edge y Safari, en español.
+
 ### Con Supabase (sincronizar entre dispositivos)
 
 1. Crea un proyecto en [Supabase](https://supabase.com).
-2. En *SQL Editor*, ejecuta `supabase/migrations/0001_init.sql`.
+2. En *SQL Editor*, ejecuta `supabase/migrations/0001_init.sql` y después `0002_engine.sql`.
 3. Copia `.env.example` como `.env.local` y rellena las claves.
 4. Carga los pacientes ficticios: `npm run db:seed`.
 

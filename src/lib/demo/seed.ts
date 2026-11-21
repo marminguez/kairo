@@ -135,7 +135,8 @@ export function buildReports(today = new Date()): Report[] {
     plan.forEach((day, i) => {
       if (!day) return;
       const date = addDays(today, i - (plan.length - 1));
-      date.setUTCHours(9 + (i % 4), 15 * (i % 4), 0, 0);
+      // Siempre en el pasado: entre 1 y 4 horas antes de la misma hora de ese día.
+      date.setTime(date.getTime() - (1 + (i % 4)) * 3_600_000 - (i % 3) * 900_000);
       const symptoms = toEntries(day.s);
       const measurements = day.m ?? {};
       const report: Report = {
@@ -156,16 +157,12 @@ export function buildReports(today = new Date()): Report[] {
 }
 
 export function buildMessages(today = new Date()): Message[] {
-  const at = (daysBack: number, h: number) => {
-    const d = addDays(today, -daysBack);
-    d.setUTCHours(h, 0, 0, 0);
-    return d.toISOString();
-  };
+  const at = (daysBack: number, hoursBack: number) => new Date(addDays(today, -daysBack).getTime() - hoursBack * 3_600_000).toISOString();
   return [
     {
       id: "m-1",
       patientId: DEMO_PATIENT_ID,
-      createdAt: at(4, 12),
+      createdAt: at(4, 2),
       sender: "enfermeria",
       body: "Hola Antonio, vemos que el sabor metálico va y viene. Es habitual con sunitinib: prueba con cubiertos de plástico y caramelos sin azúcar. Seguimos atentas.",
     },

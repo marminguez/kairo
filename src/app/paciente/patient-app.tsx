@@ -1,17 +1,18 @@
 "use client";
 
-import { Check, Mic, Send } from "lucide-react";
+import { Check, Keyboard, Mic, Send } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { DayStrip } from "@/components/day-strip";
 import { DEMO_PATIENT_ID } from "@/lib/demo/seed";
 import { DRUGS } from "@/lib/domain/drugs";
-import { extractLocal } from "@/lib/domain/extract-local";
 import { summarize } from "@/lib/domain/summary";
 import { SYMPTOMS } from "@/lib/domain/symptoms";
 import { triage } from "@/lib/domain/triage";
 import type { Report } from "@/lib/domain/types";
 import { useKairo } from "@/lib/store";
+import { useSpeech } from "@/lib/use-speech";
+import type { ExtractResponse } from "@/app/api/extract/route";
 import { cn, relativeTime } from "@/lib/utils";
 
 const AFTER: Record<Report["triage"]["level"], string> = {
@@ -27,6 +28,8 @@ export function PatientApp() {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [lastSent, setLastSent] = useState<Report | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const speech = useSpeech();
 
   if (error) return <p className="p-6 text-rojo">{error}</p>;
   if (!data || !store) return <p className="p-6 text-muted">Cargando…</p>;
@@ -39,24 +42,46 @@ export function PatientApp() {
   const firstName = patient.name.split(" ")[0];
   const messages = data.messages.filter((m) => m.patientId === patient.id);
 
-  async function send(raw: string) {
-    if (!store) return;
+  async function send(raw: string, source: Report["source"]) {
+    if (!store || !raw.trim()) return;
     setSending(true);
-    // Día 1: extracción local. Día 2: se sustituye por la llamada a la IA con este mismo como respaldo.
-    const { symptoms, measurements } = extractLocal(raw);
-    const result = triage(symptoms, measurements, s.reports);
-    const report = await store.addReport({
-      patientId: patient!.id,
-      source: "texto",
-      rawText: raw,
-      symptoms,
-      measurements,
-      triage: result,
-    });
-    setLastSent(report);
-    setText("");
-    setComposing(false);
-    setSending(false);
+    setSendError(null);
+    try {
+      const res = await fetch("/api/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: raw, drugId: patient!.drugId }),
+      });
+      if (!res.ok) throw new Error();
+      const { symptoms, measurements, engine } = (await res.json()) as ExtractResponse;
+      const result = triage(symptoms, measurements, s.reports);
+      const report = await store.addReport({
+        patientId: patient!.id,
+        source,
+        engine,
+        rawText: raw,
+        symptoms,
+        measurements,
+        triage: result,
+      });
+      setLastSent(report);
+      setText("");
+      setComposing(false);
+    } catch {
+      setSendError("No se ha podido enviar. Comprueba la conexión e inténtalo de nuevo.");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  function startTalking() {
+    if (speech.supported) speech.start();
+    else setComposing(true);
+  }
+
+  function sendSpeech() {
+    speech.stop();
+    void send(speech.transcript, "voz");
   }
 
   return (
@@ -88,6 +113,35 @@ export function PatientApp() {
             Contar algo más
           </button>
         </section>
+      ) : speech.listening || (sending && speech.transcript) ? (
+        <section aria-live="polite" className="flex flex-col items-center gap-5">
+          <span className="relative flex size-28 items-center justify-center">
+            <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-brand/25 motion-reduce:animate-none" />
+            <span className="relative flex size-28 items-center justify-center rounded-full bg-brand text-white">
+              <Mic className="size-11" aria-hidden />
+            </span>
+          </span>
+          <p className="min-h-[4.5rem] w-full text-center text-xl leading-snug">
+            {speech.transcript || <span className="text-muted">Te escuchamos. Cuéntalo con tus palabras.</span>}
+          </p>
+          <button
+            onClick={sendSpeech}
+            disabled={!speech.transcript || sending}
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-brand py-4 text-lg font-bold text-white disabled:opacity-40"
+          >
+            <Send className="size-5" aria-hidden /> {sending ? "Enviando…" : "Enviar a mi equipo"}
+          </button>
+          <button
+            onClick={() => {
+              speech.stop();
+              setText(speech.transcript);
+              setComposing(true);
+            }}
+            className="flex items-center gap-2 font-bold text-muted"
+          >
+            <Keyboard className="size-5" aria-hidden /> Escribirlo en su lugar
+          </button>
+        </section>
       ) : composing ? (
         <section className="flex flex-col gap-3">
           <label htmlFor="relato" className="text-xl font-bold">
@@ -105,7 +159,7 @@ export function PatientApp() {
           <div className="flex gap-3">
             <button
               disabled={!text.trim() || sending}
-              onClick={() => send(text)}
+              onClick={() => send(text, "texto")}
               className="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand py-4 text-lg font-bold text-white disabled:opacity-40"
             >
               <Send className="size-5" aria-hidden /> {sending ? "Enviando…" : "Enviar a mi equipo"}
@@ -118,20 +172,29 @@ export function PatientApp() {
       ) : (
         <section className="flex flex-col items-center gap-4">
           <button
-            onClick={() => setComposing(true)}
+            onClick={startTalking}
             className="flex size-44 flex-col items-center justify-center gap-2 rounded-full bg-brand text-white shadow-[0_12px_32px_-12px_var(--brand)] active:scale-95"
           >
             <Mic className="size-12" aria-hidden />
             <span className="max-w-[10ch] text-center text-lg leading-tight font-bold">Contar cómo me encuentro</span>
           </button>
           <button
-            onClick={() => send("Hoy me encuentro bien")}
+            onClick={() => send("Hoy me encuentro bien", "texto")}
             disabled={sending}
             className="flex items-center gap-2 rounded-full border-2 border-line px-5 py-3 text-lg font-bold"
           >
             <Check className="size-5 text-verde" aria-hidden /> Hoy estoy bien
           </button>
+          <button onClick={() => setComposing(true)} className="flex items-center gap-2 font-bold text-muted">
+            <Keyboard className="size-5" aria-hidden /> Prefiero escribirlo
+          </button>
         </section>
+      )}
+
+      {(sendError || speech.error) && (
+        <p role="alert" className="rounded-xl bg-rojo-tint p-4 text-lg text-rojo">
+          {sendError ?? speech.error}
+        </p>
       )}
 
       <section>

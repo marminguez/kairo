@@ -71,7 +71,7 @@ export function triage(
 
   const { temperature, systolic, diastolic } = measurements;
   if (temperature !== undefined && temperature >= config.feverC) {
-    reasons.push({ level: "rojo", rule: "fiebre", text: `Fiebre de ${temperature.toFixed(1)} ºC` });
+    reasons.push({ level: "rojo", rule: "fiebre", text: `Fiebre de ${temperature.toFixed(1).replace(".", ",")} ºC` });
   }
   if (systolic !== undefined && diastolic !== undefined) {
     const bp = `${systolic}/${diastolic} mmHg`;

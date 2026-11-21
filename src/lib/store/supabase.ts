@@ -11,6 +11,7 @@ type PatientRow = {
 type ReportRow = {
   id: string; patient_id: string; created_at: string; source: Report["source"]; raw_text: string;
   symptoms: Report["symptoms"]; measurements: Report["measurements"]; triage: Report["triage"];
+  engine?: Report["engine"] | null;
 };
 type MessageRow = {
   id: string; patient_id: string; created_at: string; sender: Message["sender"]; body: string; report_id: string | null;
@@ -26,11 +27,11 @@ export const fromPatient = (p: Patient): PatientRow => ({
 });
 const toReport = (r: ReportRow): Report => ({
   id: r.id, patientId: r.patient_id, createdAt: r.created_at, source: r.source, rawText: r.raw_text,
-  symptoms: r.symptoms, measurements: r.measurements, triage: r.triage,
+  symptoms: r.symptoms, measurements: r.measurements, triage: r.triage, engine: r.engine ?? undefined,
 });
 const fromReport = (r: NewReport) => ({
   patient_id: r.patientId, created_at: r.createdAt, source: r.source, raw_text: r.rawText,
-  symptoms: r.symptoms, measurements: r.measurements, triage: r.triage,
+  symptoms: r.symptoms, measurements: r.measurements, triage: r.triage, ...(r.engine ? { engine: r.engine } : {}),
 });
 const toMessage = (r: MessageRow): Message => ({
   id: r.id, patientId: r.patient_id, createdAt: r.created_at, sender: r.sender, body: r.body,

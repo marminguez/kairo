@@ -31,6 +31,7 @@ export function NursePanel() {
       if (fresh.length) {
          
         setArrived(new Set(fresh));
+        setSelectedId(fresh[0]);
         const t = setTimeout(() => setArrived(new Set()), 2000);
         seen.current = latestByPatient;
         return () => clearTimeout(t);
@@ -193,13 +194,25 @@ function Detail({ s, messages, store }: { s: PatientSummary; messages: Message[]
           <blockquote className="mt-2 border-l-4 border-brand-tint pl-4 text-lg leading-snug">{latest.rawText}</blockquote>
           <p className="mt-1 text-sm text-muted">{relativeTime(latest.createdAt)}</p>
           {latest.symptoms.length > 0 && (
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {latest.symptoms.map((x) => (
-                <li key={x.id} className="rounded-full bg-paper px-3 py-1 text-sm">
-                  {SYMPTOMS[x.id].label} <strong>G{x.grade}</strong>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul className="mt-3 flex flex-col gap-2">
+                {latest.symptoms.map((x) => (
+                  <li key={x.id} className="flex flex-wrap items-baseline gap-x-2 text-sm">
+                    <span className="rounded-full bg-paper px-3 py-1">
+                      {SYMPTOMS[x.id].label} <strong>grado {x.grade}</strong>
+                    </span>
+                    {x.evidence && <span className="text-muted">por «{x.evidence}»</span>}
+                  </li>
+                ))}
+              </ul>
+              {latest.engine && (
+                <p className="mt-2 text-xs text-muted">
+                  {latest.engine === "ia"
+                    ? "Síntomas graduados por IA según la escala PRO-CTCAE. Revísalos antes de actuar."
+                    : "Síntomas detectados por palabras clave (IA no disponible). Revísalos antes de actuar."}
+                </p>
+              )}
+            </>
           )}
         </section>
       )}

@@ -17,7 +17,7 @@ export const SYMPTOMS: Record<SymptomId, SymptomDef> = {
   diarrea: {
     id: "diarrea",
     label: "Diarrea",
-    patientWords: ["diarrea", "suelto", "cagalera", "voy al baño", "deposiciones"],
+    patientWords: ["diarrea", "suelto", "cagalera", "voy al baño", "salgo del baño", "deposiciones"],
     grades: {
       1: "Menos de 4 deposiciones al día más de lo habitual",
       2: "De 4 a 6 deposiciones al día más de lo habitual",

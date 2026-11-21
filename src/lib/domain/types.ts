@@ -55,6 +55,8 @@ export interface Report {
   patientId: string;
   createdAt: string; // ISO
   source: "voz" | "texto" | "seed";
+  /** Qué graduó los síntomas: la IA o el extractor local de respaldo. */
+  engine?: "ia" | "local";
   rawText: string;
   symptoms: SymptomEntry[];
   measurements: Measurements;

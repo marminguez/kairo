@@ -8,7 +8,7 @@ import type { Grade, Measurements, SymptomEntry } from "./types";
 const normalize = (s: string) =>
   s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-const INTENSIFIERS = ["mucho", "muchisimo", "muy", "fatal", "no puedo", "fuerte", "bastante", "cada vez peor"];
+const INTENSIFIERS = ["mucho", "mucha", "muchos", "muchas", "muchisimo", "muy", "fatal", "no puedo", "fuerte", "bastante", "cada vez peor"];
 const SEVERE = ["no puedo levantarme", "no puedo comer", "insoportable", "no me tengo en pie"];
 
 export function extractLocal(text: string): { symptoms: SymptomEntry[]; measurements: Measurements } {
