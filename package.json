@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
+    "@fontsource-variable/figtree": "^5.3.0",
     "@fontsource/atkinson-hyperlegible": "^5.3.0",
     "@supabase/supabase-js": "^2.119.1",
     "clsx": "^2.1.1",

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "@fontsource/atkinson-hyperlegible/400.css";
 import "@fontsource/atkinson-hyperlegible/700.css";
+import "@fontsource-variable/figtree/index.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kairo",
+  title: "Kairo · Actuar a tiempo, no en la próxima cita",
   description: "Telemonitorización de pacientes con tratamiento oncológico oral. Actuar a tiempo, no en la próxima cita.",
 };
 

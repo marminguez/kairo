@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/brand";
 
 export const metadata = { title: "Kairo · Demo" };
 
@@ -6,10 +7,10 @@ export const metadata = { title: "Kairo · Demo" };
 // Ambos comparten datos en tiempo real (BroadcastChannel en modo local, Supabase Realtime si está configurado).
 export default function DemoPage() {
   return (
-    <main className="flex h-screen flex-col bg-ink">
+    <main className="flex h-screen flex-col bg-brand">
       <header className="flex items-center gap-4 px-5 py-3 text-white">
-        <Link href="/" className="text-lg font-bold">
-          kairo
+        <Link href="/" aria-label="Kairo, ir a la portada">
+          <Logo className="h-6 text-white" />
         </Link>
         <span className="text-white/70">El paciente cuenta cómo está. Enfermería lo ve al momento.</span>
       </header>

@@ -28,6 +28,7 @@ npm run dev
 - App del paciente: http://localhost:3000/paciente
 - Panel de enfermería: http://localhost:3000/panel
 - Demo en paralelo (para el vídeo): http://localhost:3000/demo
+- Evidencia científica: http://localhost:3000/evidencia
 
 Sin configurar nada, Kairo funciona en **modo demo local**: los datos viven en el navegador y las pestañas se sincronizan entre sí. Es también la red de seguridad para la demo en directo.
 
@@ -70,6 +71,14 @@ src/
     store/              Datos: modo local o Supabase con tiempo real
 supabase/migrations/    Esquema de base de datos
 ```
+
+## Marca
+
+Logotipo y monograma en `public/brand/` (pizarra `#2F495D` y versión blanca). En el código se usan como componentes en `src/components/brand.tsx`. Paleta: pizarra sobre papel crema `#F6F2EA`; el verde, ámbar y rojo del semáforo son los únicos colores vivos. Títulos en Figtree, texto en Atkinson Hyperlegible.
+
+## Evidencia
+
+La página `/evidencia` recoge los ensayos sobre monitorización de síntomas comunicados por el paciente (Basch 2016 y 2017, Denis 2019, PRO-TECT 2025), la guía ESMO 2022 y cómo se traduce cada dato en una decisión de diseño, con sus referencias.
 
 ## Stack
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/brand";
 
 export const metadata = { title: "Kairo · IA y datos" };
 
@@ -6,10 +7,10 @@ export const metadata = { title: "Kairo · IA y datos" };
 export default function AvisoPage() {
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10 text-lg leading-relaxed">
-      <Link href="/" className="text-xl font-bold text-brand">
-        kairo
+      <Link href="/" aria-label="Kairo, ir a la portada" className="inline-block text-brand">
+        <Logo className="h-7" />
       </Link>
-      <h1 className="mt-8 text-3xl font-bold">Cómo usa Kairo la inteligencia artificial y los datos</h1>
+      <h1 className="mt-8 font-display text-3xl font-bold">Cómo usa Kairo la inteligencia artificial y los datos</h1>
 
       <h2 className="mt-8 text-xl font-bold">Es un prototipo</h2>
       <p className="mt-2">

@@ -4,6 +4,7 @@ import { Check, Keyboard, Mic, Send } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Logo } from "@/components/brand";
 import { DayStrip } from "@/components/day-strip";
 import { AskCard } from "./ask-card";
 import { DEMO_PATIENT_ID } from "@/lib/demo/seed";
@@ -89,8 +90,8 @@ export function PatientApp() {
   return (
     <div className="flex flex-col gap-8 p-6">
       <header>
-        <span className="text-lg font-bold text-brand">kairo</span>
-        <h1 className="mt-6 text-3xl font-bold">Hola, {firstName}</h1>
+        <Logo className="h-6 text-brand" />
+        <h1 className="mt-6 font-display text-3xl font-bold">Hola, {firstName}</h1>
         <p className="mt-2 text-lg leading-snug text-muted">
           Día {s.dayOfCycle} de tu tratamiento con {drug?.name ?? patient.drugId}.
           <br />

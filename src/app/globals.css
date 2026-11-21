@@ -3,16 +3,19 @@
 /*
   Kairo · tokens
   Tipografía: Atkinson Hyperlegible (Braille Institute), elegida por legibilidad para pacientes mayores o con baja visión.
-  Color de marca índigo, separado a propósito de los tres colores del semáforo clínico para que nunca compitan.
+  Títulos en Figtree, la geometría redondeada del logotipo.
+  Color de marca pizarra (#2F495D, el del logotipo) sobre papel crema. La marca es fría y apagada a propósito:
+  así nunca compite con los tres colores del semáforo clínico, que son los únicos colores vivos de la interfaz.
 */
 :root {
-  --ink: #1d2433;
-  --muted: #586274;
-  --paper: #f3f5f7;
+  --ink: #1e2d39;
+  --muted: #56636e;
+  --paper: #f6f2ea;
   --surface: #ffffff;
-  --line: #dce1e6;
-  --brand: #3b2f8f;
-  --brand-tint: #ebe9f7;
+  --line: #e3dcd0;
+  --brand: #2f495d;
+  --brand-tint: #e4eaef;
+  --sand: #e9dcc8;
 
   --verde: #2b8a57;
   --verde-tint: #e2f2e9;
@@ -32,6 +35,7 @@
   --color-line: var(--line);
   --color-brand: var(--brand);
   --color-brand-tint: var(--brand-tint);
+  --color-sand: var(--sand);
   --color-verde: var(--verde);
   --color-verde-tint: var(--verde-tint);
   --color-ambar: var(--ambar);
@@ -41,6 +45,7 @@
   --color-rojo-tint: var(--rojo-tint);
   --color-silencio: var(--silencio);
   --font-sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-display: "Figtree Variable", "Atkinson Hyperlegible", system-ui, sans-serif;
 }
 
 body {

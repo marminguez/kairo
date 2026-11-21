@@ -3,6 +3,7 @@
 import { ClipboardList, RotateCcw, Send } from "lucide-react";
 import type { SummaryResponse } from "@/app/api/summary/route";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Logo } from "@/components/brand";
 import { DayStrip } from "@/components/day-strip";
 import { LevelPill, levelBg } from "@/components/level";
 import { DRUGS } from "@/lib/domain/drugs";
@@ -50,7 +51,7 @@ export function NursePanel() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line bg-surface px-6 py-4">
-        <span className="text-xl font-bold text-brand">kairo</span>
+        <Logo className="h-7 text-brand" />
         <span className="text-muted">Enfermería oncológica, hospital de día</span>
         <dl className="ml-auto flex gap-5 text-sm">
           <Stat label="Atender hoy" value={count((s) => s.level === "rojo")} dot="bg-rojo" />
