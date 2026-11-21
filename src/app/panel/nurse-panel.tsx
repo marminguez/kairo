@@ -1,6 +1,7 @@
 "use client";
 
-import { RotateCcw, Send } from "lucide-react";
+import { ClipboardList, RotateCcw, Send } from "lucide-react";
+import type { SummaryResponse } from "@/app/api/summary/route";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DayStrip } from "@/components/day-strip";
 import { LevelPill, levelBg } from "@/components/level";
@@ -152,7 +153,23 @@ function PatientRow({
 
 function Detail({ s, messages, store }: { s: PatientSummary; messages: Message[]; store: KairoStore }) {
   const [reply, setReply] = useState("");
+  const [summary, setSummary] = useState<SummaryResponse | null>(null);
+  const [summarizing, setSummarizing] = useState(false);
   const latest = s.latest;
+
+  async function makeSummary() {
+    setSummarizing(true);
+    try {
+      const res = await fetch("/api/summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patient: s.patient, reports: s.reports }),
+      });
+      if (res.ok) setSummary((await res.json()) as SummaryResponse);
+    } finally {
+      setSummarizing(false);
+    }
+  }
 
   async function sendReply() {
     if (!reply.trim()) return;
@@ -225,13 +242,59 @@ function Detail({ s, messages, store }: { s: PatientSummary; messages: Message[]
         </section>
       )}
 
+      <section>
+        {summary ? (
+          <div className="rounded-xl border-2 border-brand-tint p-4">
+            <h3 className="font-bold">Resumen para la consulta con {s.patient.oncologist}</h3>
+            <p className="mt-2 font-bold leading-snug">{summary.headline}</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5 leading-snug">
+              {summary.evolution.map((e) => (
+                <li key={e}>{e}</li>
+              ))}
+            </ul>
+            {summary.toDiscuss.length > 0 && (
+              <>
+                <h4 className="mt-3 text-sm font-bold">Para tratar en consulta</h4>
+                <ul className="mt-1 list-disc space-y-1 pl-5 leading-snug">
+                  {summary.toDiscuss.map((e) => (
+                    <li key={e}>{e}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <p className="mt-3 text-sm text-muted">{summary.adherence}</p>
+            <p className="mt-1 text-xs text-muted">
+              {summary.engine === "ia" ? "Redactado por IA a partir de los registros del paciente." : "Generado automáticamente a partir de los registros."}
+            </p>
+          </div>
+        ) : (
+          <button
+            onClick={makeSummary}
+            disabled={summarizing}
+            className="flex items-center gap-2 rounded-full border-2 border-line px-4 py-2 font-bold hover:border-brand disabled:opacity-60"
+          >
+            <ClipboardList className="size-4" aria-hidden />
+            {summarizing ? "Preparando resumen…" : `Resumen de 14 días para ${s.patient.oncologist}`}
+          </button>
+        )}
+      </section>
+
       <section className="mt-auto">
         <h3 className="font-bold">Conversación</h3>
         <ul className="mt-2 flex max-h-56 flex-col gap-2 overflow-y-auto">
           {messages.map((m) => (
-            <li key={m.id} className={cn("rounded-xl px-3 py-2", m.sender === "enfermeria" ? "self-end bg-brand-tint" : "bg-paper")}>
+            <li
+              key={m.id}
+              className={cn(
+                "rounded-xl px-3 py-2 whitespace-pre-line",
+                m.sender === "enfermeria" ? "self-end bg-brand-tint" : m.sender === "sistema" ? "border border-line text-sm" : "bg-paper",
+              )}
+            >
               {m.body}
-              <span className="block text-xs text-muted">{relativeTime(m.createdAt)}</span>
+              <span className="block text-xs text-muted">
+                {m.sender === "sistema" ? "Respuesta automática de Kairo" : m.sender === "paciente" ? "Paciente" : "Enfermería"},{" "}
+                {relativeTime(m.createdAt)}
+              </span>
             </li>
           ))}
         </ul>

@@ -14,6 +14,8 @@ Proyecto para el **Hackathon Salud 2026**, reto Instituto #SaludsinBulos: telemo
 2. **La IA extrae y gradúa síntomas.** Diarrea, síndrome mano-pie, fatiga, tensión arterial, fiebre…
 3. **Reglas clínicas fijas deciden la prioridad.** Verde, ámbar o rojo. La IA nunca decide sola el nivel de alerta: las reglas son auditables y configurables por el servicio (`src/lib/domain/triage.ts`).
 4. **Enfermería ve en tiempo real quién necesita atención**, por qué, qué ha contado el paciente y la acción sugerida, y le responde desde el panel.
+5. **Dudas sin bulos.** El paciente pregunta y Kairo responde solo con el prospecto oficial de su medicamento (CIMA, AEMPS), citando el fragmento en el que se apoya.
+6. **Resumen para la consulta.** Con un clic, el oncólogo recibe la evolución de los últimos 14 días.
 
 ## Arrancar en local
 

@@ -4,6 +4,7 @@ import { Check, Keyboard, Mic, Send } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { DayStrip } from "@/components/day-strip";
+import { AskCard } from "./ask-card";
 import { DEMO_PATIENT_ID } from "@/lib/demo/seed";
 import { DRUGS } from "@/lib/domain/drugs";
 import { summarize } from "@/lib/domain/summary";
@@ -191,6 +192,8 @@ export function PatientApp() {
         </section>
       )}
 
+      <AskCard patient={patient} store={store} onReport={(q) => void send(q, "texto")} />
+
       {(sendError || speech.error) && (
         <p role="alert" className="rounded-xl bg-rojo-tint p-4 text-lg text-rojo">
           {sendError ?? speech.error}
@@ -214,13 +217,14 @@ export function PatientApp() {
               <li
                 key={m.id}
                 className={cn(
-                  "max-w-[90%] rounded-2xl px-4 py-3 text-lg leading-snug",
+                  "max-w-[90%] rounded-2xl px-4 py-3 text-lg leading-snug whitespace-pre-line",
                   m.sender === "paciente" ? "self-end bg-brand text-white" : "bg-paper",
                 )}
               >
                 {m.body}
                 <span className={cn("mt-1 block text-sm", m.sender === "paciente" ? "text-white/75" : "text-muted")}>
-                  {m.sender === "enfermeria" ? "Enfermería" : "Tú"}, {relativeTime(m.createdAt)}
+                  {m.sender === "enfermeria" ? "Enfermería" : m.sender === "sistema" ? "Kairo, con el prospecto oficial" : "Tú"},{" "}
+                  {relativeTime(m.createdAt)}
                 </span>
               </li>
             ))}
