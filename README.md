@@ -86,4 +86,6 @@ Next.js, TypeScript, Tailwind CSS, Supabase (Postgres + Realtime), API de Claude
 
 ## Equipo
 
-Mar Mínguez, Jose y Daniela.
+Mar Mínguez (diseño y datos), Jose Manuel Palomino (enfermería) y Daniela Galeano.
+
+El libro del proyecto, con toda la documentación, está en [`public/libro-de-kairo.pdf`](public/libro-de-kairo.pdf) y se descarga desde el pie de la web.

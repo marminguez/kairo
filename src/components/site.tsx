@@ -43,6 +43,9 @@ export function SiteFooter() {
           <Link href="/aviso" className="underline underline-offset-4">
             Cómo usa Kairo la IA y los datos
           </Link>
+          <a href="/libro-de-kairo.pdf" download className="font-bold underline underline-offset-4">
+            Descargar el libro de Kairo (PDF)
+          </a>
           <a href="https://github.com/marminguez/kairo" className="underline underline-offset-4">
             Código en GitHub
           </a>
