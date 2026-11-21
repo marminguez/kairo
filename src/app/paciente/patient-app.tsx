@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Keyboard, Mic, Send } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { DayStrip } from "@/components/day-strip";
@@ -110,6 +111,11 @@ export function PatientApp() {
             </ul>
           )}
           <p className="mt-3 text-lg leading-snug">{AFTER[lastSent.triage.level]}</p>
+          <p className="mt-3 text-sm text-muted">
+            {lastSent.engine === "ia"
+              ? "Una inteligencia artificial ha ordenado lo que nos has contado. Tu equipo lo revisa siempre."
+              : "Lo que nos has contado se ha ordenado de forma automática. Tu equipo lo revisa siempre."}
+          </p>
           <button onClick={() => setLastSent(null)} className="mt-4 font-bold text-brand underline underline-offset-4">
             Contar algo más
           </button>
@@ -189,6 +195,9 @@ export function PatientApp() {
           <button onClick={() => setComposing(true)} className="flex items-center gap-2 font-bold text-muted">
             <Keyboard className="size-5" aria-hidden /> Prefiero escribirlo
           </button>
+          <p className="max-w-[32ch] text-center text-sm text-muted">
+            Kairo usa inteligencia artificial para entender lo que cuentas. La decisión siempre es de tu equipo.
+          </p>
         </section>
       )}
 
@@ -231,6 +240,14 @@ export function PatientApp() {
           </ul>
         )}
       </section>
+
+      <footer className="border-t border-line pt-4 text-sm leading-snug text-muted">
+        Prototipo de investigación con pacientes ficticios. No es un producto sanitario y no sustituye a tu equipo. No
+        escribas datos personales reales.{" "}
+        <Link href="/aviso" className="font-bold text-brand underline underline-offset-4">
+          Cómo usa Kairo la IA y los datos
+        </Link>
+      </footer>
     </div>
   );
 }

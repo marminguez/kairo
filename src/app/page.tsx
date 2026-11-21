@@ -51,7 +51,10 @@ export default function Home() {
       </nav>
 
       <footer className="mt-auto pt-16 text-sm text-muted">
-        Prototipo para Hackathon Salud 2026. Todos los pacientes son ficticios. Kairo no sustituye el criterio clínico.
+        Prototipo para Hackathon Salud 2026. Todos los pacientes son ficticios. Kairo no sustituye el criterio clínico.{" "}
+        <Link href="/aviso" className="underline underline-offset-4">
+          Cómo usa Kairo la IA y los datos
+        </Link>
       </footer>
     </main>
   );

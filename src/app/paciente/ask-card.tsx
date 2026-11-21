@@ -97,6 +97,10 @@ export function AskCard({
         <div aria-live="polite" className="mt-2 flex flex-col gap-3">
           <p className="text-sm text-muted">Has preguntado: {asked}</p>
           <p className="text-lg leading-snug whitespace-pre-line">{result.answer}</p>
+          <p className="text-sm text-muted">
+            Respuesta generada por inteligencia artificial solo con el prospecto oficial. Si tienes dudas, consulta a tu
+            equipo.
+          </p>
           {result.citations.length > 0 && (
             <div className="rounded-xl bg-paper p-3">
               <p className="flex items-center gap-2 text-sm font-bold">

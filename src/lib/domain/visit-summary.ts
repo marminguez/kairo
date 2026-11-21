@@ -44,7 +44,8 @@ export function digest(patient: Patient, reports: Report[], days = 14, now = new
 export function digestToText(patient: Patient, d: ReturnType<typeof digest>) {
   const drug = DRUGS[patient.drugId];
   const lines = [
-    `Paciente: ${patient.name}, ${patient.age} años. ${patient.diagnosis}.`,
+    // Minimización: la IA nunca recibe el nombre del paciente.
+    `Paciente: ${patient.age} años, ${patient.sex === "F" ? "mujer" : "hombre"}. ${patient.diagnosis}.`,
     `Tratamiento: ${drug?.name} ${patient.dose} (${drug?.schedule}). Inicio de ciclo: ${patient.cycleStart}.`,
     `Días con registro: ${d.reportDays.size} de ${d.days}.`,
     "Síntomas (grado máximo, grado más reciente, días con el síntoma):",
